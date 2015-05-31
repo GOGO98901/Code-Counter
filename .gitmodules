@@ -1,0 +1,6 @@
+[submodule "GOGO - Library"]
+	path = GOGO - Library
+	url = https://github.com/GOGO98901/GOGO_Library
+[submodule "GOGO_Library"]
+	path = GOGO_Library
+	url = https://github.com/GOGO98901/GOGO_Library.git
