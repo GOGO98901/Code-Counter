@@ -20,6 +20,7 @@ import net.gogo98901.util.Data;
 import net.gogo98901.util.log.Log;
 import java.awt.Label;
 import javax.swing.SwingConstants;
+import java.awt.Toolkit;
 
 public class Display extends JFrame {
 	private static final long serialVersionUID = 1L;
@@ -44,6 +45,7 @@ public class Display extends JFrame {
 			setSize(600, 508);
 			setResizable(false);
 			setLocationRelativeTo(null);
+			setIconImage(Toolkit.getDefaultToolkit().getImage(Display.class.getResource("/com/sun/java/swing/plaf/windows/icons/DetailsView.gif")));
 
 			searcher = new Searcher();
 			fileChooser.setFileSelectionMode(JFileChooser.DIRECTORIES_ONLY);
@@ -163,6 +165,7 @@ public class Display extends JFrame {
 		Log.info("Searching...");
 		searcher.setPath(searchField.getText());
 		searcher.search();
+		result.setText("");
 		for (String path : searcher.getPaths()) {
 			apened(path.replace("\\", "/").replace(searchField.getText(), "") + "\n");
 		}

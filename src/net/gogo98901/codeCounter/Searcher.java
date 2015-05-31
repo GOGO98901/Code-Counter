@@ -34,6 +34,7 @@ public class Searcher {
 		lines = 0;
 		whiteSpace = 0;
 		files = 0;
+		dir = 0;
 
 		File[] start = filePath.listFiles();
 		scan(start);
