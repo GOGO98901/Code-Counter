@@ -17,7 +17,7 @@ public class Bootstrap {
 			Data.setDefultLookAndFeel();
 
 			display = new Display();
-			Log.severe("Bootstrap... OK");
+			Log.info("Bootstrap... OK");
 			display.setTitle(getTitle() + " " + getVersion());
 		} catch (Exception e) {
 			Log.severe("Bootstrap... ERROR");
