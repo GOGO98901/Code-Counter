@@ -1,4 +1,4 @@
-# Code-Counter
+# Code-Counter [![Build Status](https://travis-ci.org/GOGO98901/Code-Counter.svg?branch=master)](https://travis-ci.org/GOGO98901/Code-Counter)
 A Simple program that counts the lines of code in a directory
 
 
