@@ -14,10 +14,16 @@ public class Searcher {
 
 	private int lines, whiteSpace, files, dir;
 
-	private String[] exclude = new String[] { ".png", ".psd", ".db", ".ttf", ".dll", ".class" };
+	private List<String> exclude = new ArrayList<String>();
 
 	public Searcher() {
 		path = "";
+		exclude.add(".png");
+		exclude.add(".psd");
+		exclude.add(".db");
+		exclude.add(".ttf");
+		exclude.add(".dll");
+		exclude.add(".class");
 	}
 
 	public void setPath(String path) {
