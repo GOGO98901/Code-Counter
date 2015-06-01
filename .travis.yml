@@ -1,2 +1,2 @@
 language: java
-ant: main
+ant main
