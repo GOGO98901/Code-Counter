@@ -59,7 +59,7 @@ public class Display extends JFrame {
 
 			init();
 		} catch (Exception e) {
-			Log.info("Display... FAILED");
+			Log.severe("Display... FAILED");
 			Log.stackTrace(e);
 			return;
 		}
