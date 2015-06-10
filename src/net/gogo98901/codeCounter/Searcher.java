@@ -76,15 +76,14 @@ public class Searcher {
 
 	private boolean checkFile(String file) {
 		for (String type : config.getExcludeFiles()) {
-			if (file.toLowerCase().endsWith(type)) return false;
+			if (file.toLowerCase().endsWith(type.toLowerCase())) return false;
 		}
 		return true;
 	}
 
 	private boolean checkDir(String dir) {
 		for (String type : config.getExcludeDirectories()) {
-			Log.info(dir + ", " + type);
-			if (dir.toLowerCase().endsWith(type)) return false;
+			if (dir.toLowerCase().endsWith(type.toLowerCase())) return false;
 		}
 		return true;
 	}
