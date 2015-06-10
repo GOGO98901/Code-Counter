@@ -6,7 +6,7 @@ import java.io.FileReader;
 import java.util.ArrayList;
 import java.util.List;
 
-import net.gogo98901.util.log.Log;
+import net.gogo98901.log.Log;
 
 public class Searcher {
 	private List<String> paths = new ArrayList<String>();

@@ -5,8 +5,8 @@ import java.util.Date;
 import java.util.logging.Level;
 
 import net.gogo98901.codeCounter.Display;
+import net.gogo98901.log.Log;
 import net.gogo98901.util.Data;
-import net.gogo98901.util.log.Log;
 
 public class Bootstrap {
 	private static Display display;
@@ -18,7 +18,6 @@ public class Bootstrap {
 
 			display = new Display();
 			Log.info("Bootstrap... OK");
-			display.setTitle(getTitle() + " " + getVersion());
 		} catch (Exception e) {
 			Log.severe("Bootstrap... ERROR");
 			Log.stackTrace(Level.SEVERE, e);

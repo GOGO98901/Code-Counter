@@ -1,6 +1,8 @@
 package net.gogo98901.codeCounter;
 
+import java.awt.Label;
 import java.awt.ScrollPane;
+import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyAdapter;
@@ -13,17 +15,17 @@ import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 import javax.swing.JTextPane;
+import javax.swing.SwingConstants;
 import javax.swing.border.EmptyBorder;
 
 import net.gogo98901.Bootstrap;
+import net.gogo98901.log.Log;
 import net.gogo98901.util.Data;
-import net.gogo98901.util.log.Log;
-import java.awt.Label;
-import javax.swing.SwingConstants;
-import java.awt.Toolkit;
 
 public class Display extends JFrame {
 	private static final long serialVersionUID = 1L;
+
+	private Config config;
 
 	private JPanel contentPane;
 	private JTextField searchField;
@@ -38,6 +40,8 @@ public class Display extends JFrame {
 	private JTextField fieldDirs;
 	private Label labelDir;
 
+	private JButton btnConfig;
+
 	public Display() {
 		Log.info("Started " + Bootstrap.getTitle() + " by " + Bootstrap.getAuthor());
 		try {
@@ -47,6 +51,7 @@ public class Display extends JFrame {
 			setLocationRelativeTo(null);
 			setIconImage(Toolkit.getDefaultToolkit().getImage(Display.class.getResource("/com/sun/java/swing/plaf/windows/icons/DetailsView.gif")));
 
+			setTitle(Bootstrap.getTitle() + " " + Bootstrap.getVersion());
 			searcher = new Searcher();
 			fileChooser.setFileSelectionMode(JFileChooser.DIRECTORIES_ONLY);
 
@@ -57,6 +62,8 @@ public class Display extends JFrame {
 			return;
 		}
 		Log.info("Display... OK");
+
+		config = new Config(this);
 	}
 
 	private void init() {
@@ -123,26 +130,35 @@ public class Display extends JFrame {
 		Label labelWhiteSpace = new Label("White Space");
 		labelWhiteSpace.setBounds(102, 446, 62, 22);
 		contentPane.add(labelWhiteSpace);
-		
+
 		fieldFiles = new JTextField("0");
 		fieldFiles.setBounds(190, 417, 86, 20);
 		fieldFiles.setEditable(false);
 		fieldFiles.setHorizontalAlignment(SwingConstants.RIGHT);
 		contentPane.add(fieldFiles);
-		
+
 		Label labelFiles = new Label("Files");
 		labelFiles.setBounds(282, 417, 62, 22);
 		contentPane.add(labelFiles);
-		
+
 		fieldDirs = new JTextField("0");
 		fieldDirs.setBounds(190, 448, 86, 20);
 		fieldDirs.setEditable(false);
 		fieldDirs.setHorizontalAlignment(SwingConstants.RIGHT);
 		contentPane.add(fieldDirs);
-		
+
 		labelDir = new Label("Directories");
 		labelDir.setBounds(282, 446, 62, 22);
 		contentPane.add(labelDir);
+
+		btnConfig = new JButton("Config");
+		btnConfig.setBounds(495, 447, 89, 23);
+		btnConfig.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent event) {
+				config.show();
+			}
+		});
+		contentPane.add(btnConfig);
 	}
 
 	private void showSearchWindow() {
