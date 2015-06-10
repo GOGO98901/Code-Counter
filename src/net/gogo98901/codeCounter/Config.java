@@ -3,6 +3,8 @@ package net.gogo98901.codeCounter;
 import java.awt.BorderLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.KeyEvent;
+import java.awt.event.KeyListener;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 import java.io.BufferedWriter;
@@ -119,9 +121,39 @@ public class Config {
 				if (type.equals("dir")) for (String[] dir : dirs) {
 					if (dir[0].equals(name)) dirs.set(dirs.indexOf(dir), new String[] { name, excluded });
 				}
+				Log.info(tcl.getNewValue());
 			}
 		});
+		table.addKeyListener(new KeyListener() {
+			public void keyTyped(KeyEvent e) {
 
+			}
+
+			public void keyReleased(KeyEvent e) {
+				if (e.getKeyCode() == KeyEvent.VK_DELETE) {
+					int row = table.getSelectedRow();
+					if (row != -1) {
+						if (table.getValueAt(row, 0).equals("file")) for (String[] file : files) {
+							if (file[0].equals(table.getValueAt(row, 1))) {
+								files.remove(files.indexOf(file));
+								break;
+							}
+						}
+						else if (table.getValueAt(row, 0).equals("dir")) for (String[] dir : dirs) {
+							if (dir[0].equals(table.getValueAt(row, 1))) {
+								dirs.remove(dirs.indexOf(dir));
+								break;
+							}
+						}
+						model.removeRow(row);
+					}
+				}
+			}
+
+			public void keyPressed(KeyEvent e) {
+
+			}
+		});
 		table.setPreferredScrollableViewportSize(table.getPreferredSize());
 		JScrollPane scrollPane = new JScrollPane(table);
 		frame.add(scrollPane);
@@ -183,8 +215,8 @@ public class Config {
 			if (content != null && content.length > 0) {
 				files.clear();
 				dirs.clear();
-				for (int i = model.getRowCount() - 1; i > 0; i--) {
-					model.removeRow(i);
+				while (model.getRowCount() > 0) {
+					model.removeRow(0);
 				}
 				for (String line : content) {
 					line = line.toLowerCase();
