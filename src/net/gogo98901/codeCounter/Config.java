@@ -37,7 +37,7 @@ public class Config {
 	private JFrame frame;
 	private JTable table;
 	private DefaultTableModel model;
-	private JButton btnAdd;
+	private JButton btnAdd, btnRemove;
 
 	private List<String[]> files = new ArrayList<String[]>();
 	private List<String[]> dirs = new ArrayList<String[]>();
@@ -126,37 +126,20 @@ public class Config {
 		});
 		table.addKeyListener(new KeyListener() {
 			public void keyTyped(KeyEvent e) {
-
 			}
 
 			public void keyReleased(KeyEvent e) {
-				if (e.getKeyCode() == KeyEvent.VK_DELETE) {
-					int row = table.getSelectedRow();
-					if (row != -1) {
-						if (table.getValueAt(row, 0).equals("file")) for (String[] file : files) {
-							if (file[0].equals(table.getValueAt(row, 1))) {
-								files.remove(files.indexOf(file));
-								break;
-							}
-						}
-						else if (table.getValueAt(row, 0).equals("dir")) for (String[] dir : dirs) {
-							if (dir[0].equals(table.getValueAt(row, 1))) {
-								dirs.remove(dirs.indexOf(dir));
-								break;
-							}
-						}
-						model.removeRow(row);
-					}
-				}
+				if (e.getKeyCode() == KeyEvent.VK_DELETE) remove(table.getSelectedRow());
 			}
 
 			public void keyPressed(KeyEvent e) {
-
 			}
 		});
 		table.setPreferredScrollableViewportSize(table.getPreferredSize());
 		JScrollPane scrollPane = new JScrollPane(table);
-		frame.add(scrollPane);
+		frame.add(scrollPane, BorderLayout.CENTER);
+
+		JPanel bottom = new JPanel();
 
 		btnAdd = new JButton();
 		btnAdd.setText("Add filter");
@@ -180,18 +163,43 @@ public class Config {
 							enteredType = "file";
 							if (!enteredName.startsWith(".")) enteredName = "." + enteredName;
 							files.add(new String[] { enteredName, "true" });
+							Log.info("Filter added (file)");
 						}
 						if (type.getSelectedIndex() == 1) {
 							enteredType = "dir";
 							if (!enteredName.startsWith(File.separator)) enteredName = File.separator + enteredName;
 							dirs.add(new String[] { enteredName, "true" });
+							Log.info("Filter added (dir)");
 						}
 						if (enteredType != null) model.addRow(new Object[] { enteredType, enteredName, true });
 					}
 				}
 			}
 		});
-		frame.add(btnAdd, BorderLayout.SOUTH);
+		bottom.add(btnAdd, BorderLayout.WEST);
+		btnRemove = new JButton();
+		btnRemove.setText("Remove Filter");
+		btnRemove.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				if (table.getSelectedRow() != -1) remove(table.getSelectedRow());
+				else {
+					JPanel dialog = new JPanel();
+					dialog.add(new JLabel("Filter"));
+					JComboBox<String> items = new JComboBox<String>();
+					for (int i = 0; i < table.getRowCount(); i++) {
+						String type = model.getValueAt(i, 0).toString();
+						String name = model.getValueAt(i, 1).toString();
+						items.addItem("(" + type + ")  " + name);
+					}
+					dialog.add(items);
+
+					int result = JOptionPane.showConfirmDialog(null, dialog, "Please select the item to remove", JOptionPane.OK_CANCEL_OPTION);
+					if (result == JOptionPane.OK_OPTION) remove(items.getSelectedIndex());
+				}
+			}
+		});
+		bottom.add(btnRemove, BorderLayout.EAST);
+		frame.add(bottom, BorderLayout.SOUTH);
 	}
 
 	public void show() {
@@ -284,5 +292,25 @@ public class Config {
 			if (dir[1].equals("true")) goodDirs.add(dir[0]);
 		}
 		return goodDirs;
+	}
+
+	private void remove(int row) {
+		if (row != -1) {
+			if (table.getValueAt(row, 0).equals("file")) for (String[] file : files) {
+				if (file[0].equals(table.getValueAt(row, 1))) {
+					files.remove(files.indexOf(file));
+					Log.info("Filter removed (file)");
+					break;
+				}
+			}
+			else if (table.getValueAt(row, 0).equals("dir")) for (String[] dir : dirs) {
+				if (dir[0].equals(table.getValueAt(row, 1))) {
+					dirs.remove(dirs.indexOf(dir));
+					Log.info("Filter removed (dir)");
+					break;
+				}
+			}
+			model.removeRow(row);
+		}
 	}
 }
