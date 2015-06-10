@@ -1,6 +1,8 @@
 package net.gogo98901.codeCounter;
 
+import java.awt.BorderLayout;
 import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 import java.io.BufferedWriter;
@@ -11,9 +13,15 @@ import java.util.ArrayList;
 import java.util.List;
 
 import javax.swing.AbstractAction;
+import javax.swing.JButton;
+import javax.swing.JComboBox;
 import javax.swing.JFrame;
+import javax.swing.JLabel;
+import javax.swing.JOptionPane;
+import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
+import javax.swing.JTextField;
 import javax.swing.table.DefaultTableModel;
 
 import net.gogo98901.Bootstrap;
@@ -27,6 +35,7 @@ public class Config {
 	private JFrame frame;
 	private JTable table;
 	private DefaultTableModel model;
+	private JButton btnAdd;
 
 	private List<String[]> files = new ArrayList<String[]>();
 	private List<String[]> dirs = new ArrayList<String[]>();
@@ -116,6 +125,41 @@ public class Config {
 		table.setPreferredScrollableViewportSize(table.getPreferredSize());
 		JScrollPane scrollPane = new JScrollPane(table);
 		frame.add(scrollPane);
+
+		btnAdd = new JButton();
+		btnAdd.setText("Add filter");
+		btnAdd.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				JPanel dialog = new JPanel();
+				dialog.add(new JLabel("Type"));
+				JComboBox<String> type = new JComboBox<String>();
+				type.addItem("file");
+				type.addItem("dir");
+				dialog.add(type);
+				dialog.add(new JLabel("Name"));
+				JTextField name = new JTextField(10);
+				dialog.add(name);
+				int result = JOptionPane.showConfirmDialog(null, dialog, "Please select type and enter name", JOptionPane.OK_CANCEL_OPTION);
+				if (result == JOptionPane.OK_OPTION) {
+					String enteredName = name.getText();
+					if (enteredName.length() > 0) {
+						String enteredType = null;
+						if (type.getSelectedIndex() == 0) {
+							enteredType = "file";
+							if (!enteredName.startsWith(".")) enteredName = "." + enteredName;
+							files.add(new String[] { enteredName, "true" });
+						}
+						if (type.getSelectedIndex() == 1) {
+							enteredType = "dir";
+							if (!enteredName.startsWith(File.separator)) enteredName = File.separator + enteredName;
+							dirs.add(new String[] { enteredName, "true" });
+						}
+						if (enteredType != null) model.addRow(new Object[] { enteredType, enteredName, true });
+					}
+				}
+			}
+		});
+		frame.add(btnAdd, BorderLayout.SOUTH);
 	}
 
 	public void show() {
