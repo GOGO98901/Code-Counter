@@ -69,7 +69,14 @@ public class Config {
 
 		Object[] columnNames = { "Type", "Name", "Exclude" };
 		Object[][] data = { { "test", "test", false } };
-		model = new DefaultTableModel(data, columnNames);
+		model = new DefaultTableModel(data, columnNames) {
+			private static final long serialVersionUID = 1L;
+
+			public boolean isCellEditable(int row, int column) {
+				if (column == 2) return true;
+				return false;
+			}
+		};
 		model.removeRow(0);
 		table = new JTable(model) {
 			private static final long serialVersionUID = 1L;
@@ -94,10 +101,15 @@ public class Config {
 
 			public void actionPerformed(ActionEvent e) {
 				TableCellListener tcl = (TableCellListener) e.getSource();
-				System.out.println("Row   : " + tcl.getRow());
-				System.out.println("Column: " + tcl.getColumn());
-				System.out.println("Old   : " + tcl.getOldValue());
-				System.out.println("New   : " + tcl.getNewValue());
+				String type = model.getValueAt(tcl.getRow(), 0).toString();
+				String name = model.getValueAt(tcl.getRow(), 1).toString();
+				String excluded = model.getValueAt(tcl.getRow(), 2).toString();
+				if (type.equals("file")) for (String[] file : files) {
+					if (file[0].equals(name)) files.set(files.indexOf(file), new String[] { name, excluded });
+				}
+				if (type.equals("dir")) for (String[] dir : dirs) {
+					if (dir[0].equals(name)) dirs.set(dirs.indexOf(dir), new String[] { name, excluded });
+				}
 			}
 		});
 
