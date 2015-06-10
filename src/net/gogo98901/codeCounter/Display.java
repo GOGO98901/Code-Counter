@@ -52,7 +52,9 @@ public class Display extends JFrame {
 			setIconImage(Toolkit.getDefaultToolkit().getImage(Display.class.getResource("/com/sun/java/swing/plaf/windows/icons/DetailsView.gif")));
 
 			setTitle(Bootstrap.getTitle() + " " + Bootstrap.getVersion());
-			searcher = new Searcher();
+
+			config = new Config(this);
+			searcher = new Searcher(config);
 			fileChooser.setFileSelectionMode(JFileChooser.DIRECTORIES_ONLY);
 
 			init();
@@ -62,8 +64,6 @@ public class Display extends JFrame {
 			return;
 		}
 		Log.info("Display... OK");
-
-		config = new Config(this);
 	}
 
 	private void init() {

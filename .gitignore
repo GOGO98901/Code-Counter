@@ -2,6 +2,8 @@
 *.classpath
 *.project
 
+Code Counter.cfg
+
 /.externalToolBuilders/
 /build/
 

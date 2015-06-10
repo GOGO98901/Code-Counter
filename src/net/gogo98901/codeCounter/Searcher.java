@@ -14,16 +14,11 @@ public class Searcher {
 
 	private int lines, whiteSpace, files, dir;
 
-	private List<String> exclude = new ArrayList<String>();
+	private Config config;
 
-	public Searcher() {
+	public Searcher(Config config) {
+		this.config = config;
 		path = "";
-		exclude.add(".png");
-		exclude.add(".psd");
-		exclude.add(".db");
-		exclude.add(".ttf");
-		exclude.add(".dll");
-		exclude.add(".class");
 	}
 
 	public void setPath(String path) {
@@ -54,9 +49,9 @@ public class Searcher {
 	private void scan(File[] group) {
 		dir++;
 		for (File file : group) {
-			Log.info(file);
-			if (file.isDirectory()) scan(file.listFiles());
-			else if (check(file.getName())) {
+			// Log.info(file);
+			if (file.isDirectory() && checkDir(File.pathSeparator + file.getName())) scan(file.listFiles());
+			else if (checkFile(file.getName())) {
 				count(file);
 				paths.add(file.getAbsolutePath());
 			}
@@ -78,9 +73,16 @@ public class Searcher {
 		}
 	}
 
-	private boolean check(String file) {
-		for (String type : exclude) {
+	private boolean checkFile(String file) {
+		for (String type : config.getExcludeFiles()) {
 			if (file.toLowerCase().endsWith(type)) return false;
+		}
+		return true;
+	}
+
+	private boolean checkDir(String dir) {
+		for (String type : config.getExcludeDirectories()) {
+			if (dir.toLowerCase().endsWith(type)) return false;
 		}
 		return true;
 	}
