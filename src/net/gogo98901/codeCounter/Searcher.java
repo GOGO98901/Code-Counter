@@ -50,8 +50,9 @@ public class Searcher {
 		dir++;
 		for (File file : group) {
 			// Log.info(file);
-			if (file.isDirectory() && checkDir(File.pathSeparator + file.getName())) scan(file.listFiles());
-			else if (checkFile(file.getName())) {
+			if (file.isDirectory()) {
+				if (checkDir("\\" + file.getName())) scan(file.listFiles());
+			} else if (checkFile(file.getName())) {
 				count(file);
 				paths.add(file.getAbsolutePath());
 			}
@@ -82,6 +83,7 @@ public class Searcher {
 
 	private boolean checkDir(String dir) {
 		for (String type : config.getExcludeDirectories()) {
+			Log.info(dir + ", " + type);
 			if (dir.toLowerCase().endsWith(type)) return false;
 		}
 		return true;
