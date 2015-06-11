@@ -37,6 +37,8 @@ public class Searcher {
 		whiteSpace = 0;
 		files = 0;
 		dirs = 0;
+		filesExcluded = 0;
+		dirsExcluded = 0;
 
 		File[] start = filePath.listFiles();
 		scan(start);
