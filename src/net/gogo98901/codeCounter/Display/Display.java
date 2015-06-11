@@ -34,12 +34,10 @@ public class Display extends JFrame {
 	private JTextPane result;
 
 	private Searcher searcher;
-	private JFileChooser fileChooser = new JFileChooser();
-	private JTextField fieldLines;
-	private JTextField fieldWhiteSpace;
-	private JTextField fieldFiles;
-	private JTextField fieldDirs;
-	private Label labelDir;
+	private JFileChooser fileChooser;
+	private JTextField fieldLines, fieldWhiteSpace;
+	private JTextField fieldFiles, fieldDirs;
+	private JTextField fieldFilesExcluded, fieldDirsExcluded;
 
 	private JButton btnConfig;
 
@@ -56,6 +54,7 @@ public class Display extends JFrame {
 
 			config = new Config(this);
 			searcher = new Searcher(config);
+			fileChooser = new JFileChooser();
 			fileChooser.setFileSelectionMode(JFileChooser.DIRECTORIES_ONLY);
 
 			init();
@@ -112,46 +111,78 @@ public class Display extends JFrame {
 		scrollPane.setBounds(10, 37, 574, 374);
 		contentPane.add(scrollPane);
 
-		fieldLines = new JTextField("0");
-		fieldLines.setBounds(10, 417, 86, 20);
-		fieldLines.setHorizontalAlignment(SwingConstants.RIGHT);
-		fieldLines.setEditable(false);
-		contentPane.add(fieldLines);
+		{
+			fieldLines = new JTextField("0");
+			fieldLines.setBounds(10, 417, 86, 20);
+			fieldLines.setHorizontalAlignment(SwingConstants.RIGHT);
+			fieldLines.setEditable(false);
+			fieldLines.setToolTipText(Tooltip.lines);
+			contentPane.add(fieldLines);
 
-		Label labelLines = new Label("Lines");
-		labelLines.setBounds(102, 415, 62, 22);
-		contentPane.add(labelLines);
+			Label labelLines = new Label("Lines");
+			labelLines.setBounds(102, 415, 62, 22);
+			contentPane.add(labelLines);
+		}
+		{
+			fieldWhiteSpace = new JTextField("0");
+			fieldWhiteSpace.setBounds(10, 448, 86, 20);
+			fieldWhiteSpace.setHorizontalAlignment(SwingConstants.RIGHT);
+			fieldWhiteSpace.setEditable(false);
+			fieldWhiteSpace.setToolTipText(Tooltip.whitespace);
+			contentPane.add(fieldWhiteSpace);
 
-		fieldWhiteSpace = new JTextField("0");
-		fieldWhiteSpace.setBounds(10, 448, 86, 20);
-		fieldWhiteSpace.setHorizontalAlignment(SwingConstants.RIGHT);
-		fieldWhiteSpace.setEditable(false);
-		contentPane.add(fieldWhiteSpace);
+			Label labelWhiteSpace = new Label("White Space");
+			labelWhiteSpace.setBounds(102, 446, 62, 22);
+			contentPane.add(labelWhiteSpace);
+		}
+		{
+			fieldFiles = new JTextField("0");
+			fieldFiles.setHorizontalAlignment(SwingConstants.RIGHT);
+			fieldFiles.setEditable(false);
+			fieldFiles.setBounds(170, 417, 44, 20);
+			fieldFiles.setToolTipText(Tooltip.files);
+			contentPane.add(fieldFiles);
 
-		Label labelWhiteSpace = new Label("White Space");
-		labelWhiteSpace.setBounds(102, 446, 62, 22);
-		contentPane.add(labelWhiteSpace);
+			Label lableFiles = new Label("Files");
+			lableFiles.setBounds(220, 417, 62, 22);
+			contentPane.add(lableFiles);
+		}
+		{
+			fieldDirs = new JTextField("0");
+			fieldDirs.setHorizontalAlignment(SwingConstants.RIGHT);
+			fieldDirs.setEditable(false);
+			fieldDirs.setBounds(170, 448, 44, 20);
+			fieldDirs.setToolTipText(Tooltip.dirs);
+			contentPane.add(fieldDirs);
 
-		fieldFiles = new JTextField("0");
-		fieldFiles.setBounds(190, 417, 86, 20);
-		fieldFiles.setEditable(false);
-		fieldFiles.setHorizontalAlignment(SwingConstants.RIGHT);
-		contentPane.add(fieldFiles);
+			Label lableDirs = new Label("Directories");
+			lableDirs.setBounds(220, 448, 62, 22);
+			contentPane.add(lableDirs);
+		}
+		{
+			fieldFilesExcluded = new JTextField("0");
+			fieldFilesExcluded.setBounds(288, 417, 44, 20);
+			fieldFilesExcluded.setEditable(false);
+			fieldFilesExcluded.setHorizontalAlignment(SwingConstants.RIGHT);
+			fieldFilesExcluded.setToolTipText(Tooltip.filesExcluded);
+			contentPane.add(fieldFilesExcluded);
 
-		Label labelFiles = new Label("Files");
-		labelFiles.setBounds(282, 417, 62, 22);
-		contentPane.add(labelFiles);
+			Label labelFilesExclude = new Label("Files Excluded");
+			labelFilesExclude.setBounds(338, 415, 147, 22);
+			contentPane.add(labelFilesExclude);
+		}
+		{
+			fieldDirsExcluded = new JTextField("0");
+			fieldDirsExcluded.setBounds(288, 448, 44, 20);
+			fieldDirsExcluded.setEditable(false);
+			fieldDirsExcluded.setHorizontalAlignment(SwingConstants.RIGHT);
+			fieldDirsExcluded.setToolTipText(Tooltip.dirsExcluded);
+			contentPane.add(fieldDirsExcluded);
 
-		fieldDirs = new JTextField("0");
-		fieldDirs.setBounds(190, 448, 86, 20);
-		fieldDirs.setEditable(false);
-		fieldDirs.setHorizontalAlignment(SwingConstants.RIGHT);
-		contentPane.add(fieldDirs);
-
-		labelDir = new Label("Directories");
-		labelDir.setBounds(282, 446, 62, 22);
-		contentPane.add(labelDir);
-
+			Label labelDirExcluded = new Label("Directories Excluded");
+			labelDirExcluded.setBounds(338, 446, 147, 22);
+			contentPane.add(labelDirExcluded);
+		}
 		btnConfig = new JButton("Config");
 		btnConfig.setBounds(495, 447, 89, 23);
 		btnConfig.addActionListener(new ActionListener() {
@@ -190,6 +221,8 @@ public class Display extends JFrame {
 		fieldWhiteSpace.setText(searcher.getWhiteSpace() + "");
 		fieldFiles.setText(searcher.getFiles() + "");
 		fieldDirs.setText(searcher.getDirs() + "");
+		fieldFilesExcluded.setText(searcher.getFilesExcluded() + "");
+		fieldDirsExcluded.setText(searcher.getDirsExcluded() + "");
 	}
 
 	private void apened(String line) {

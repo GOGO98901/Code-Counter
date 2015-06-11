@@ -13,7 +13,7 @@ public class Searcher {
 	private List<String> paths = new ArrayList<String>();
 	private String path;
 
-	private int lines, whiteSpace, files, dir;
+	private int lines, whiteSpace, files, dirs, filesExcluded, dirsExcluded;
 
 	private Config config;
 
@@ -36,19 +36,18 @@ public class Searcher {
 		lines = 0;
 		whiteSpace = 0;
 		files = 0;
-		dir = 0;
+		dirs = 0;
 
 		File[] start = filePath.listFiles();
 		scan(start);
 		files = paths.size();
 		Log.info("Searching... Finished");
-		Log.info("Found " + files + " files and " + dir + " directories");
+		Log.info("Found " + files + " files and " + dirs + " directories");
 		Log.info(lines + " lines, but with " + whiteSpace + " white space lines");
 		Log.info("");
 	}
 
 	private void scan(File[] group) {
-		dir++;
 		for (File file : group) {
 			// Log.info(file);
 			if (file.isDirectory()) {
@@ -77,15 +76,24 @@ public class Searcher {
 
 	private boolean checkFile(String file) {
 		for (String type : config.getExcludeFiles()) {
-			if (file.toLowerCase().endsWith(type.toLowerCase())) return false;
+			if (file.toLowerCase().endsWith(type.toLowerCase())) {
+				filesExcluded++;
+				return false;
+
+			}
 		}
+		files++;
 		return true;
 	}
 
 	private boolean checkDir(String dir) {
 		for (String type : config.getExcludeDirectories()) {
-			if (dir.toLowerCase().endsWith(type.toLowerCase())) return false;
+			if (dir.toLowerCase().endsWith(type.toLowerCase())) {
+				dirsExcluded++;
+				return false;
+			}
 		}
+		dirs++;
 		return true;
 	}
 
@@ -110,6 +118,14 @@ public class Searcher {
 	}
 
 	public int getDirs() {
-		return dir;
+		return dirs;
+	}
+
+	public int getFilesExcluded() {
+		return filesExcluded;
+	}
+
+	public int getDirsExcluded() {
+		return dirsExcluded;
 	}
 }
