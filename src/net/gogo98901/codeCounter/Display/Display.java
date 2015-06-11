@@ -1,4 +1,4 @@
-package net.gogo98901.codeCounter;
+package net.gogo98901.codeCounter.Display;
 
 import java.awt.Label;
 import java.awt.ScrollPane;
@@ -19,6 +19,7 @@ import javax.swing.SwingConstants;
 import javax.swing.border.EmptyBorder;
 
 import net.gogo98901.Bootstrap;
+import net.gogo98901.codeCounter.Searcher;
 import net.gogo98901.log.Log;
 import net.gogo98901.util.Data;
 

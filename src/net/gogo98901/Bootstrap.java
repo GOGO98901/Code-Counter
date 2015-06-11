@@ -4,7 +4,7 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.logging.Level;
 
-import net.gogo98901.codeCounter.Display;
+import net.gogo98901.codeCounter.Display.Display;
 import net.gogo98901.log.Log;
 import net.gogo98901.util.Data;
 
