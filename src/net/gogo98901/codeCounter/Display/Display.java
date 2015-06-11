@@ -39,7 +39,7 @@ public class Display extends JFrame {
 	private JTextField fieldFiles, fieldDirs;
 	private JTextField fieldFilesExcluded, fieldDirsExcluded;
 
-	private JButton btnConfig;
+	private JButton btnConfig, btnClear;
 
 	public Display() {
 		Log.info("Started " + Bootstrap.getTitle() + " by " + Bootstrap.getAuthor());
@@ -170,7 +170,7 @@ public class Display extends JFrame {
 			contentPane.add(fieldFilesExcluded);
 
 			Label labelFilesExclude = new Label("Files Excluded");
-			labelFilesExclude.setBounds(338, 415, 147, 22);
+			labelFilesExclude.setBounds(338, 417, 147, 22);
 			contentPane.add(labelFilesExclude);
 		}
 		{
@@ -182,8 +182,28 @@ public class Display extends JFrame {
 			contentPane.add(fieldDirsExcluded);
 
 			Label labelDirExcluded = new Label("Directories Excluded");
-			labelDirExcluded.setBounds(338, 446, 147, 22);
+			labelDirExcluded.setBounds(338, 448, 147, 22);
 			contentPane.add(labelDirExcluded);
+		}
+		{
+			btnClear = new JButton("Clear");
+			btnClear.setBounds(495, 417, 89, 23);
+			btnClear.addActionListener(new ActionListener() {
+				public void actionPerformed(ActionEvent event) {
+					searchField.setText(new File(System.getProperty("user.home")).getAbsolutePath());
+					searcher.setPath(searchField.getText());
+
+					result.setText("");
+					
+					fieldLines.setText("0");
+					fieldWhiteSpace.setText("0");
+					fieldFiles.setText("0");
+					fieldDirs.setText("0");;
+					fieldFilesExcluded.setText("0");
+					fieldDirsExcluded.setText("0");
+				}
+			});
+			contentPane.add(btnClear);
 		}
 		{
 			btnConfig = new JButton("Config");
