@@ -6,7 +6,7 @@ import java.io.FileReader;
 import java.util.ArrayList;
 import java.util.List;
 
-import net.gogo98901.codeCounter.Display.Config;
+import net.gogo98901.codeCounter.Display.config.Config;
 import net.gogo98901.log.Log;
 
 public class Searcher {

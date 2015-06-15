@@ -1,4 +1,4 @@
-package net.gogo98901.codeCounter.Display;
+package net.gogo98901.codeCounter.Display.config;
 
 import java.awt.BorderLayout;
 import java.awt.event.ActionEvent;

@@ -20,6 +20,7 @@ import javax.swing.border.EmptyBorder;
 
 import net.gogo98901.Bootstrap;
 import net.gogo98901.codeCounter.Searcher;
+import net.gogo98901.codeCounter.Display.config.Config;
 import net.gogo98901.log.Log;
 import net.gogo98901.util.Data;
 
