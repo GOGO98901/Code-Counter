@@ -46,7 +46,7 @@ public class Config {
 
 	private String[] stock = new String[] { ".png", ".jpg", ".psd", ".db", ".ttf", ".dll", ".class", File.separator + ".git" };
 
-	public Config (JFrame display) {
+	public Config(JFrame display) {
 		this.display = display;
 		try {
 			initFrame();
