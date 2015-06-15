@@ -46,7 +46,7 @@ public class Config {
 
 	private String[] stock = new String[] { ".png", ".jpg", ".psd", ".db", ".ttf", ".dll", ".class", File.separator + ".git" };
 
-	public Config(JFrame display) {
+	public Config (JFrame display) {
 		this.display = display;
 		try {
 			initFrame();
@@ -124,15 +124,13 @@ public class Config {
 			}
 		});
 		table.addKeyListener(new KeyListener() {
-			public void keyTyped(KeyEvent e) {
-			}
+			public void keyTyped(KeyEvent e) {}
 
 			public void keyReleased(KeyEvent e) {
 				if (e.getKeyCode() == KeyEvent.VK_DELETE) remove(table.getSelectedRow());
 			}
 
-			public void keyPressed(KeyEvent e) {
-			}
+			public void keyPressed(KeyEvent e) {}
 		});
 		table.setPreferredScrollableViewportSize(table.getPreferredSize());
 		JScrollPane scrollPane = new JScrollPane(table);
