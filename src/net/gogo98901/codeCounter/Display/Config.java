@@ -121,7 +121,6 @@ public class Config {
 				if (type.equals("dir")) for (String[] dir : dirs) {
 					if (dir[0].equals(name)) dirs.set(dirs.indexOf(dir), new String[] { name, excluded });
 				}
-				Log.info(tcl.getNewValue());
 			}
 		});
 		table.addKeyListener(new KeyListener() {
