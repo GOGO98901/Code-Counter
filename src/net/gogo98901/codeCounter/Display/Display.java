@@ -54,6 +54,7 @@ public class Display extends JFrame {
 			setTitle(Bootstrap.getTitle() + " " + Bootstrap.getVersion());
 
 			config = new Config(this);
+			config.load();
 			searcher = new Searcher(config);
 			fileChooser = new JFileChooser();
 			fileChooser.setFileSelectionMode(JFileChooser.DIRECTORIES_ONLY);
